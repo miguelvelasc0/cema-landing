@@ -32,7 +32,7 @@
                     colors: {
                         cema: {
                             cyan: '#00B8B0', // Acabado cian/teal del logo
-                            navy: '#0A1C2E', // Azul oscuro profundo
+                            navy: '#0d1f35', // Azul marino medio (suavizado y corporativo)
                             gray: '#6B7280', // Gris corporativo
                             light: '#F8FAFC' // Fondo claro
                         }
@@ -174,19 +174,37 @@
         <!-- Canvas para la animación de fondo (Nodos/Red médica) -->
         <canvas id="bg-canvas"></canvas>
 
+        <!-- Overlay de contraste oscuro (estilo viñeta) para descansar la vista tras el logotipo principal -->
+        <div
+            class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.1)_0%,rgba(13,31,53,0.7)_100%)] z-[1] pointer-events-none dark:opacity-100 opacity-40">
+        </div>
+
+        <!-- Halo ligero centrado debajo del logo y subtexto para iluminar suavemente la zona -->
+        <div class="absolute inset-0 z-[2] pointer-events-none"
+            style="background: radial-gradient(ellipse 60% 30% at 50% 68%, rgba(255,255,255,0.06) 0%, transparent 100%);">
+        </div>
+
         <div class="relative z-10 flex flex-col items-center hero-content">
-
-            <!-- Logo Hero en contenedor de cristal -->
-            <div
-                class="mb-8 px-6 py-4 rounded-3xl bg-white/60 dark:bg-white/80 backdrop-blur-md shadow-lg border border-white/40 transition-colors duration-500">
-                <img src="/CEMA Logo.png" alt="CEMA Logo Central" class="h-12 md:h-16 object-contain">
-            </div>
-
             <!-- Título Principal -->
             <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight max-w-4xl text-gradient-cema mb-6"
                 data-i18n="hero_title">
                 Donde la tecnología médica se convierte en experiencia clínica.
             </h1>
+
+            <div class="z-20 w-full flex items-center justify-center pointer-events-none mb-8" id="hero-logo-wrapper">
+                <!-- Logo Hero con iluminación estival (Direccional + Gradiente Radial Azul) -->
+                <div id="hero-logo-center" class="pointer-events-auto origin-center relative">
+                    <!-- Glow muy sutil en gradiente detrás del logo (Cyan del logo CEMA hacia transparente) -->
+                    <div
+                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[90%] bg-[radial-gradient(ellipse_at_center,rgba(0,180,216,0.15)_0%,transparent_65%)] blur-2xl rounded-full z-0 pointer-events-none mix-blend-screen mix-blend-lighten">
+                    </div>
+
+                    <img src="/CEMA Logo.png" alt="CEMA Logo Central"
+                        class="relative z-10 w-56 sm:w-72 md:w-96 lg:w-[40rem] object-contain transition-transform duration-1000"
+                        style="filter: drop-shadow(-8px -8px 20px rgba(243,247,255,0.3)) drop-shadow(10px 10px 30px rgba(0,180,216,0.4));">
+                </div>
+            </div>
+
 
             <!-- Subtítulo -->
             <p class="text-base md:text-lg font-light text-cema-gray dark:text-gray-300 max-w-2xl mb-10"
@@ -203,7 +221,7 @@
          SECCIÓN 1: INTRODUCCIÓN (Estilo Clean)
     ========================================== -->
     <section id="parallax"
-        class="relative w-full py-24 bg-white dark:bg-[#06101c] transition-colors duration-500 flex items-center">
+        class="relative w-full py-24 bg-white dark:bg-cema-navy transition-colors duration-500 flex items-center">
         <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-12">
             <div class="w-full md:w-1/2">
                 <div class="relative rounded-2xl overflow-hidden shadow-2xl aspect-video md:aspect-square">
@@ -390,8 +408,11 @@
 
     <!-- Footer Simple -->
     <footer
-        class="py-12 bg-white dark:bg-[#06101c] text-center border-t border-gray-200 dark:border-gray-800 transition-colors duration-500">
-        <div class="text-2xl font-light tracking-widest text-cema-cyan mb-4">CEMA</div>
+        class="py-12 bg-white dark:bg-cema-navy text-center border-t border-gray-200 dark:border-gray-800 transition-colors duration-500 flex flex-col items-center justify-center gap-4">
+        <div class="text-2xl font-light tracking-widest text-cema-cyan">CEMA</div>
+        <p class="text-sm text-cema-gray dark:text-gray-400 max-w-lg mx-auto px-4" data-i18n="footer_address">
+            C. Guillermo Gonzalez Camarena 1100, Santa Fe, Sta Fé, Álvaro Obregón, 01210 Ciudad de México, CDMX
+        </p>
         <p class="text-sm text-gray-500" data-i18n="footer">© 2026 Centro Especializado Médico Avanzado. Todos los
             derechos reservados.</p>
     </footer>
@@ -451,6 +472,7 @@
                 vision_text: 'Consolidarnos como un centro de referencia en entrenamiento médico avanzado, reconocido por su innovación, calidad académica y liderazgo tecnológico.',
                 vision_subtext: 'El futuro de la medicina',
                 tour_360_title: 'Recorrido <span class="font-bold text-cema-cyan">360°</span>',
+                footer_address: 'C. Guillermo Gonzalez Camarena 1100, Santa Fe, Sta Fé, Álvaro Obregón, 01210 Ciudad de México, CDMX',
                 footer: '© 2026 Centro Especializado Médico Avanzado. Todos los derechos reservados.'
             },
             en: {
@@ -480,6 +502,7 @@
                 vision_text: 'To consolidate ourselves as a reference center in advanced medical training, recognized for innovation, academic quality, and technological leadership.',
                 vision_subtext: 'The future of medicine',
                 tour_360_title: '<span class="font-bold text-cema-cyan">360°</span> Tour',
+                footer_address: 'C. Guillermo Gonzalez Camarena 1100, Santa Fe, Sta Fé, Álvaro Obregón, 01210 Mexico City, CDMX',
                 footer: '© 2026 Advanced Medical Specialized Center. All rights reserved.'
             }
         };
@@ -627,7 +650,7 @@
         // ANIMACIONES GSAP (Scroll)
         // ==========================================
 
-        // Desvanecer el texto del Hero al hacer scroll hacia abajo
+        // Desvanecer EL TEXTO del Hero al hacer scroll hacia abajo
         gsap.to(".hero-content", {
             scrollTrigger: {
                 trigger: "#hero",
@@ -637,6 +660,20 @@
             },
             opacity: 0,
             y: 100
+        });
+
+        // Hacer que el LOGO del Hero crezca simulando pasar "sobre" la cámara
+        gsap.to("#hero-logo-center", {
+            scrollTrigger: {
+                trigger: "#hero",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            },
+            scale: 8,       // Crece masivamente
+            y: 200,         // Se traslada hacia abajo virtualmente para mantenerse visible mientras la página sube
+            opacity: 0,     // Desaparece al final del scroll para no bloquear permanentemente la vista
+            ease: "power2.in"
         });
 
         // 1. Animaciones suaves al entrar en viewport
