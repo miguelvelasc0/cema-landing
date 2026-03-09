@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEMA | Centro Especializado Médico Avanzado</title>
+
+    <!-- Tipografía Manrope (Brief CEMA) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Iconos Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Pannellum 360 Viewer CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+
+    <!-- Configuración personalizada de Tailwind -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        cema: {
+                            cyan: '#00B8B0', // Acabado cian/teal del logo
+                            navy: '#0A1C2E', // Azul oscuro profundo
+                            gray: '#6B7280', // Gris corporativo
+                            light: '#F8FAFC' // Fondo claro
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Ocultar barra de scroll para un look más limpio */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00B8B0;
+            border-radius: 4px;
+        }
+
+        /* Degradado de texto estilo clínico/tecnológico */
+        .text-gradient-cema {
+            background-image: linear-gradient(144.5deg, #0A1C2E 28%, rgba(10, 28, 46, 0.2) 115%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .dark .text-gradient-cema {
+            background-image: linear-gradient(144.5deg, #ffffff 28%, rgba(255, 255, 255, 0.2) 115%);
+        }
+
+        /* Botón estilo píldora CEMA */
+        .btn-cema {
+            border: 1px solid rgba(0, 184, 176, 0.3);
+            position: relative;
+            background: transparent;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cema:hover {
+            background: rgba(0, 184, 176, 0.1);
+            border-color: #00B8B0;
+            box-shadow: 0 0 15px rgba(0, 184, 176, 0.2);
+        }
+
+        /* Asegurar que el canvas del Hero quede al fondo SOLO del Hero */
+        #bg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .clip-overflow {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body class="antialiased font-sans bg-cema-light text-cema-navy dark:bg-cema-navy dark:text-white">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-12 py-4 transition-all duration-300"
+        id="navbar">
+        <!-- Logotipo CEMA Textual -->
+        <div class="flex items-center gap-1 z-50 relative">
+            <span class="text-3xl font-light tracking-widest text-cema-cyan">C</span>
+            <span
+                class="text-3xl font-light tracking-widest text-cema-navy dark:text-white transition-colors">EMA</span>
+        </div>
+
+        <!-- Enlaces (Ocultos en móvil) -->
+        <div class="hidden md:flex items-center gap-8 z-50 relative">
+            <a href="#hero" class="text-sm font-semibold hover:text-cema-cyan transition-colors"
+                data-i18n="nav_home">Inicio</a>
+            <a href="#parallax" class="text-sm font-semibold hover:text-cema-cyan transition-colors"
+                data-i18n="nav_spaces">Espacios</a>
+            <a href="#merge-section" class="text-sm font-semibold hover:text-cema-cyan transition-colors"
+                data-i18n="nav_tech">Tecnología</a>
+        </div>
+
+        <!-- Controles: Idioma, Tema, Menú Hamburger -->
+        <div class="flex items-center gap-4 z-50 relative">
+            <button id="lang-toggle"
+                class="text-xs font-bold px-2 py-1 rounded-md hover:bg-cema-cyan/10 text-cema-cyan transition-colors flex-shrink-0">
+                EN
+            </button>
+            <button id="theme-toggle"
+                class="p-2 rounded-full hover:bg-cema-cyan/10 text-cema-cyan transition-colors relative w-9 h-9 flex items-center justify-center flex-shrink-0">
+                <i data-lucide="moon" id="icon-moon"
+                    class="w-4 h-4 absolute transition-all duration-300 scale-100 dark:scale-0 dark:opacity-0"></i>
+                <i data-lucide="sun" id="icon-sun"
+                    class="w-4 h-4 absolute transition-all duration-300 scale-0 opacity-0 dark:scale-100 dark:opacity-100"></i>
+            </button>
+            <button class="btn-cema rounded-full px-6 py-2 hidden sm:block">
+                <span class="text-sm font-bold text-cema-cyan" data-i18n="btn_explore">Explorar</span>
+            </button>
+
+            <!-- Hamburger Button -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-cema-navy dark:text-white">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Menú Móvil Overlay -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-white/95 dark:bg-cema-navy/95 backdrop-blur-md z-40 flex flex-col items-center justify-center gap-8 transition-all duration-500 opacity-0 pointer-events-none">
+        <a href="#hero"
+            class="mobile-link text-2xl font-light tracking-widest text-cema-navy dark:text-white hover:text-cema-cyan transition-colors"
+            data-i18n="nav_home">Inicio</a>
+        <a href="#parallax"
+            class="mobile-link text-2xl font-light tracking-widest text-cema-navy dark:text-white hover:text-cema-cyan transition-colors"
+            data-i18n="nav_spaces">Espacios</a>
+        <a href="#merge-section"
+            class="mobile-link text-2xl font-light tracking-widest text-cema-navy dark:text-white hover:text-cema-cyan transition-colors"
+            data-i18n="nav_tech">Tecnología</a>
+    </div>
+
+    <!-- ==========================================
+         SECCIÓN 0: HERO WEB3 ADAPTADO A CEMA
+    ========================================== -->
+    <header id="hero"
+        class="relative w-full h-screen flex flex-col items-center justify-center text-center px-5 overflow-hidden">
+        <!-- Canvas para la animación de fondo (Nodos/Red médica) -->
+        <canvas id="bg-canvas"></canvas>
+
+        <div class="relative z-10 flex flex-col items-center hero-content">
+
+            <!-- Logo Hero en contenedor de cristal -->
+            <div
+                class="mb-8 px-6 py-4 rounded-3xl bg-white/60 dark:bg-white/80 backdrop-blur-md shadow-lg border border-white/40 transition-colors duration-500">
+                <img src="/CEMA Logo.png" alt="CEMA Logo Central" class="h-12 md:h-16 object-contain">
+            </div>
+
+            <!-- Título Principal -->
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight max-w-4xl text-gradient-cema mb-6"
+                data-i18n="hero_title">
+                Donde la tecnología médica se convierte en experiencia clínica.
+            </h1>
+
+            <!-- Subtítulo -->
+            <p class="text-base md:text-lg font-light text-cema-gray dark:text-gray-300 max-w-2xl mb-10"
+                data-i18n="hero_subtitle">
+                Impulsamos la excelencia médica a través de entrenamiento especializado, tecnología avanzada y
+                actualización continua.
+            </p>
+
+
+        </div>
+    </header>
+
+    <!-- ==========================================
+         SECCIÓN 1: PARALLAX SPLIT HERO
+    ========================================== -->
+    <section id="parallax"
+        class="relative w-full h-screen flex flex-col md:flex-row overflow-hidden bg-white dark:bg-[#06101c] transition-colors duration-500">
+        <!-- Mitad Izquierda (Imagen Quirófano/Instalaciones) -->
+        <div class="w-full md:w-1/2 h-1/2 md:h-full relative clip-overflow">
+            <div id="hero-img-left" class="absolute top-[-20%] left-0 w-full h-[140%] bg-cover bg-center"
+                style="background-image: url('/recepcion.jpg');">
+            </div>
+            <div class="absolute inset-0 bg-cema-cyan/10 mix-blend-multiply dark:mix-blend-overlay"></div>
+        </div>
+
+        <!-- Mitad Derecha (Texto e Imagen Flotante) -->
+        <div class="w-full md:w-1/2 h-1/2 md:h-full relative flex items-center justify-center overflow-hidden">
+            <div class="relative z-10 text-center px-8">
+                <p class="text-xl md:text-2xl font-medium text-cema-navy dark:text-gray-200" data-i18n="location_info">
+                    Localizado estratégicamente junto a Garden Santa Fe.
+                </p>
+            </div>
+
+            <!-- Título de fondo sutil -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+                <h2 class="text-6xl md:text-9xl font-bold text-cema-navy dark:text-white text-center leading-none">
+                    SANTA<br>FE</h2>
+            </div>
+
+            <!-- Imagen Flotante (Aula/Entrenamiento) CON FILTRO -->
+            <div id="hero-img-float"
+                class="relative z-10 w-48 h-64 md:w-64 md:h-80 shadow-2xl rounded-sm overflow-hidden transform rotate-2 border-4 border-white dark:border-cema-navy"
+                style="filter: brightness(0.4) saturate(0.3);">
+                <div class="w-full h-full bg-cover bg-center" style="background-image: url('/garden.webp');">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECCIÓN 2: TEXT OVERLAY MERGE
+    ========================================== -->
+    <section id="merge-section" class="relative w-full h-screen bg-cema-navy overflow-hidden">
+        <!-- Imagen Full-Bleed -->
+        <div id="merge-bg"
+            class="absolute inset-0 w-full h-[120%] top-[-10%] bg-cover bg-center opacity-30 mix-blend-screen"
+            style="background-image: url('/cirugia.png');">
+        </div>
+
+        <div id="merge-text-container"
+            class="absolute inset-0 flex items-center justify-center w-full h-full overflow-hidden">
+            <div class="relative w-full max-w-6xl flex justify-between items-center px-4 h-64 md:h-96">
+                <!-- Palabra Izquierda -->
+                <span id="text-left"
+                    class="text-white font-light text-3xl sm:text-4xl md:text-7xl lg:text-8xl tracking-widest absolute left-4 md:left-10 whitespace-nowrap -mt-10 md:-mt-24"
+                    data-i18n="merge_left">
+                    TECNOLOGÍA
+                </span>
+                <!-- Palabra Derecha (Acento Cian) -->
+                <span id="text-right"
+                    class="text-cema-cyan font-bold text-3xl sm:text-4xl md:text-7xl lg:text-8xl tracking-widest absolute right-4 md:right-10 whitespace-nowrap mt-16 md:mt-32"
+                    data-i18n="merge_right">
+                    MÉDICA
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECCIÓN NUEVA: ESPACIO DE FORMACIÓN
+    ========================================== -->
+    <section class="relative w-full h-screen overflow-hidden bg-cema-navy" id="formation-section">
+        <!-- Imagen Parallax -->
+        <div id="formation-bg" class="absolute inset-0 w-full h-[120%] bg-cover bg-center opacity-60 mix-blend-overlay"
+            style="background-image: url('/formacionydesarrollo.jpg'); top: -10%;">
+        </div>
+
+        <!-- Capa de Oscurecimiento Gradiente -->
+        <div class="absolute inset-0 bg-gradient-to-r from-cema-navy/90 via-cema-navy/60 to-transparent"></div>
+
+        <!-- Contenido -->
+        <div class="relative z-10 flex items-center h-full px-8 md:px-24">
+            <div class="max-w-2xl">
+                <span class="text-cema-cyan font-bold tracking-widest text-sm uppercase mb-4 block"
+                    id="formation-label">CEMA Santa Fe</span>
+                <h2 class="text-white text-4xl md:text-6xl font-light leading-tight mb-8" id="formation-title">
+                    Un espacio diseñado para la <span class="font-bold text-gradient-cema dark:text-white"
+                        style="background-image: linear-gradient(144.5deg, #00B8B0 28%, #ffffff 115%);">formación</span>
+                    y el desarrollo profesional.
+                </h2>
+                <button class="btn-cema rounded-full px-8 py-3 bg-white/5 backdrop-blur-sm" id="formation-btn">
+                    <span class="text-white font-semibold">Conoce nuestras instalaciones</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECCIÓN 2.6: CARACTERÍSTICAS (OVERLAY)
+    ========================================== -->
+
+    <!-- 1. Capacitación -->
+    <section
+        class="relative w-full h-[80vh] md:h-[70vh] flex items-center justify-center overflow-hidden feature-section text-center">
+        <!-- Background Imagen -->
+        <div class="img-parallax w-full h-[120%] bg-cover bg-center absolute inset-0 top-[-10%]"
+            style="background-image: url('/robots.jpg');"></div>
+
+        <!-- Gradientes Oscurecimiento -->
+        <div class="absolute inset-0 bg-cema-navy/70 mix-blend-multiply"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-cema-navy/90 via-transparent to-cema-navy/90"></div>
+
+        <!-- Text Content Centro -->
+        <div class="relative z-10 max-w-2xl px-8 text-content">
+            <h3 class="text-3xl md:text-5xl font-light text-white mb-6 leading-tight drop-shadow-lg">
+                Capacitación en un entorno moderno y <span class="font-bold text-cema-cyan">funcional</span>
+            </h3>
+            <div class="h-1 w-20 bg-cema-cyan rounded mb-6 mx-auto"></div>
+            <p class="text-gray-300 text-lg md:text-xl font-light leading-relaxed drop-shadow-md">
+                Instalaciones equipadas con la última tecnología médica y herramientas de simulación, diseñadas
+                específicamente para maximizar su curva de aprendizaje práctico y teórico.
+            </p>
+        </div>
+    </section>
+
+    <!-- 2. Aprendizaje -->
+    <section
+        class="relative w-full h-[80vh] md:h-[70vh] flex items-center justify-center overflow-hidden feature-section text-center">
+        <!-- Background Imagen -->
+        <div class="img-parallax w-full h-[120%] bg-cover bg-center absolute inset-0 top-[-10%]"
+            style="background-image: url('/robots.jpg');"></div>
+
+        <!-- Gradientes Oscurecimiento -->
+        <div class="absolute inset-0 bg-cema-navy/70 mix-blend-multiply"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-cema-navy/90 via-cema-navy/40 to-cema-navy/90"></div>
+
+        <!-- Text Content Centro -->
+        <div class="relative z-10 max-w-2xl px-8 text-content">
+            <h3 class="text-3xl md:text-5xl font-light text-white mb-6 leading-tight drop-shadow-lg">
+                Pensada para una experiencia de aprendizaje <span class="font-bold text-cema-cyan">óptima</span>
+            </h3>
+            <div class="h-1 w-20 bg-cema-cyan rounded mb-6 mx-auto"></div>
+            <p class="text-gray-300 text-lg md:text-xl font-light leading-relaxed drop-shadow-md">
+                Cuidamos cada detalle desde la acústica hasta la ergonomía del mobiliario, garantizando un ambiente que
+                estimula la concentración y retención del conocimiento.
+            </p>
+        </div>
+    </section>
+
+    <!-- 3. Interacción -->
+    <section
+        class="relative w-full h-[80vh] md:h-[70vh] flex items-center justify-center overflow-hidden feature-section text-center">
+        <!-- Background Imagen -->
+        <div class="img-parallax w-full h-[120%] bg-cover bg-center absolute inset-0 top-[-10%]"
+            style="background-image: url('/robots.jpg');"></div>
+
+        <!-- Gradientes Oscurecimiento -->
+        <div class="absolute inset-0 bg-cema-navy/70 mix-blend-multiply"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-cema-navy/90 via-transparent to-cema-navy/90"></div>
+
+        <!-- Text Content Centro -->
+        <div class="relative z-10 max-w-2xl px-8 text-content">
+            <h3 class="text-3xl md:text-5xl font-light text-white mb-6 leading-tight drop-shadow-lg">
+                Áreas que fomentan la interacción y el intercambio de <span
+                    class="font-bold text-cema-cyan">ideas</span>
+            </h3>
+            <div class="h-1 w-20 bg-cema-cyan rounded mb-6 mx-auto"></div>
+            <p class="text-gray-300 text-lg md:text-xl font-light leading-relaxed drop-shadow-md">
+                Espacios colaborativos y salas de networking diseñadas para conectar a profesionales de la salud,
+                fomentando discusiones productivas y creando redes de contacto valiosas.
+            </p>
+        </div>
+    </section>
+
+    <!-- 4. Entrenamiento Alto Nivel -->
+    <section
+        class="relative w-full h-[80vh] md:h-[70vh] flex items-center justify-center overflow-hidden feature-section text-center">
+        <!-- Background Imagen -->
+        <div class="img-parallax w-full h-[120%] bg-cover bg-center absolute inset-0 top-[-10%]"
+            style="background-image: url('/robots.jpg');"></div>
+
+        <!-- Gradientes Oscurecimiento -->
+        <div class="absolute inset-0 bg-cema-navy/70 mix-blend-multiply"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-cema-navy/90 via-cema-navy/40 to-cema-navy/90"></div>
+
+        <!-- Text Content Centro -->
+        <div class="relative z-10 max-w-2xl px-8 text-content">
+            <h3 class="text-3xl md:text-5xl font-light text-white mb-6 leading-tight drop-shadow-lg">
+                Espacios especializados para entrenamiento médico de <span class="font-bold text-cema-cyan">alto
+                    nivel</span>
+            </h3>
+            <div class="h-1 w-20 bg-cema-cyan rounded mb-6 mx-auto"></div>
+            <p class="text-gray-300 text-lg md:text-xl font-light leading-relaxed drop-shadow-md">
+                Nuestras instalaciones cuentan con simuladores quirúrgicos, anfiteatros de observación y laboratorios
+                húmedos diseñados bajo estándares internacionales de educación continua.
+            </p>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECCIÓN 360: VISTA INMERSIVA
+    ========================================== -->
+    <section id="vista-360" class="relative w-full h-[60vh] md:h-screen bg-cema-navy overflow-hidden">
+        <!-- Contenedor de Pannellum -->
+        <div id="panorama-container" class="w-full h-full"></div>
+
+        <!-- Overlay del título (pointer-events-none para no bloquear controles del 360) -->
+        <div class="absolute top-8 left-6 md:top-12 md:left-12 z-10 pointer-events-none">
+            <h3 class="text-white text-2xl md:text-4xl font-light drop-shadow-md bg-black/40 px-6 py-3 rounded-2xl backdrop-blur-md border border-white/10"
+                data-i18n="tour_360_title">
+                Recorrido <span class="font-bold text-cema-cyan">360°</span>
+            </h3>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECCIÓN 3: BLURRED TEXT REVEAL
+    ========================================== -->
+    <section id="blur-section"
+        class="relative w-full min-h-screen bg-cema-light dark:bg-cema-navy flex items-center justify-center px-6 py-24 md:px-24 transition-colors duration-500">
+        <div class="max-w-4xl mx-auto text-center">
+            <!-- Párrafo para efecto de revelado (Visión CEMA) -->
+            <p id="blur-text"
+                class="font-light text-2xl md:text-5xl leading-tight md:leading-snug text-cema-navy dark:text-white"
+                data-i18n="vision_text">
+                Consolidarnos como un centro de referencia en entrenamiento médico avanzado, reconocido por su
+                innovación, calidad académica y liderazgo tecnológico.
+            </p>
+
+            <div class="mt-16 flex justify-center opacity-0" id="blur-subtext">
+                <span
+                    class="inline-block border-b-2 border-cema-cyan text-cema-cyan font-bold text-xs tracking-[0.2em] uppercase pb-2"
+                    data-i18n="vision_subtext">
+                    El futuro de la medicina
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Simple -->
+    <footer
+        class="py-12 bg-white dark:bg-[#06101c] text-center border-t border-gray-200 dark:border-gray-800 transition-colors duration-500">
+        <div class="text-2xl font-light tracking-widest text-cema-cyan mb-4">CEMA</div>
+        <p class="text-sm text-gray-500" data-i18n="footer">© 2026 Centro Especializado Médico Avanzado. Todos los
+            derechos reservados.</p>
+    </footer>
+
+    <!-- Scripts: GSAP y ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Pannellum 360 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+    <script>
+        // Inicializar iconos de Lucide
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ==========================================
+        // LÓGICA DE NAVBAR SCROLL (Fondo sólido al bajar)
+        // ==========================================
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-white/90', 'dark:bg-cema-navy/90', 'backdrop-blur-md', 'shadow-sm');
+            } else {
+                navbar.classList.remove('bg-white/90', 'dark:bg-cema-navy/90', 'backdrop-blur-md', 'shadow-sm');
+            }
+        });
+
+        // ==========================================
+        // SISTEMA DE IDIOMAS (i18n)
+        // ==========================================
+        const translations = {
+            es: {
+                nav_home: 'Inicio',
+                nav_spaces: 'Espacios',
+                nav_tech: 'Tecnología',
+                btn_explore: 'Explorar',
+                badge_text: 'Innovación y Evolución Continua',
+                hero_title: 'Donde la tecnología médica se convierte en experiencia clínica.',
+                hero_subtitle: 'Impulsamos la excelencia médica a través de entrenamiento especializado, tecnología avanzada y actualización continua.',
+                scroll_down: 'Scroll',
+                merge_left: 'TECNOLOGÍA',
+                merge_right: 'MÉDICA',
+                vision_text: 'Consolidarnos como un centro de referencia en entrenamiento médico avanzado, reconocido por su innovación, calidad académica y liderazgo tecnológico.',
+                vision_subtext: 'El futuro de la medicina',
+                tour_360_title: 'Recorrido 360°',
+                footer: '© 2026 Centro Especializado Médico Avanzado. Todos los derechos reservados.'
+            },
+            en: {
+                nav_home: 'Home',
+                nav_spaces: 'Spaces',
+                nav_tech: 'Technology',
+                btn_explore: 'Explore',
+                badge_text: 'Continuous Innovation & Evolution',
+                hero_title: 'Where medical technology becomes clinical experience.',
+                hero_subtitle: 'Driving medical excellence through specialized training, advanced technology, and continuous learning.',
+                scroll_down: 'Scroll',
+                merge_left: 'MEDICAL',
+                merge_right: 'TECHNOLOGY',
+                vision_text: 'To consolidate ourselves as a reference center in advanced medical training, recognized for innovation, academic quality, and technological leadership.',
+                vision_subtext: 'The future of medicine',
+                tour_360_title: '360° Tour',
+                footer: '© 2026 Advanced Medical Specialized Center. All rights reserved.'
+            }
+        };
+
+        let currentLang = 'es';
+        const langToggleBtn = document.getElementById('lang-toggle');
+
+        function updateTexts() {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    element.innerText = translations[currentLang][key];
+                }
+            });
+            // Al actualizar textos, necesitamos recalcular el texto fragmentado para el blur
+            setupBlurText();
+            // Actualizar botón de idioma
+            langToggleBtn.textContent = currentLang === 'es' ? 'EN' : 'ES';
+            document.documentElement.lang = currentLang;
+        }
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            updateTexts();
+        });
+
+        // ==========================================
+        // SISTEMA DE TEMA (CLARO / OSCURO)
+        // ==========================================
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+        });
+
+        // ==========================================
+        // ANIMACIÓN DE CANVAS (Fondo Interactivo CEMA)
+        // ==========================================
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+
+        const connectionDistance = 160;
+        const mouseRepelRadius = 150;
+        const mouseRepelForce = 3;
+        let mouse = { x: -1000, y: -1000 };
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initParticles();
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        // Interacción Ratón/Táctil
+        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        window.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
+        window.addEventListener('touchstart', (e) => { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }, { passive: true });
+        window.addEventListener('touchmove', (e) => { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }, { passive: true });
+        window.addEventListener('touchend', () => { mouse.x = -1000; mouse.y = -1000; });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.baseVx = this.vx;
+                this.baseVy = this.vy;
+                this.radius = Math.random() * 1.5 + 0.5;
+                this.isDisturbed = false;
+            }
+            update() {
+                let dx = this.x - mouse.x;
+                let dy = this.y - mouse.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+
+                this.isDisturbed = dist < mouseRepelRadius;
+
+                if (this.isDisturbed) {
+                    let angle = Math.atan2(dy, dx);
+                    let force = (mouseRepelRadius - dist) / mouseRepelRadius;
+                    this.vx = this.baseVx + Math.cos(angle) * force * mouseRepelForce;
+                    this.vy = this.baseVy + Math.sin(angle) * force * mouseRepelForce;
+                } else {
+                    this.vx += (this.baseVx - this.vx) * 0.05;
+                    this.vy += (this.baseVy - this.vy) * 0.05;
+                }
+
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) { this.baseVx *= -1; this.vx = this.baseVx; this.x = this.x < 0 ? 0 : width; }
+                if (this.y < 0 || this.y > height) { this.baseVy *= -1; this.vy = this.baseVy; this.y = this.y < 0 ? 0 : height; }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                // Color CEMA Cyan: 0, 184, 176
+                ctx.fillStyle = `rgba(0, 184, 176, ${this.isDisturbed ? 0.8 : 0.4})`;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            let particleCount = Math.floor((width * height) / 15000);
+            for (let i = 0; i < particleCount; i++) particles.push(new Particle());
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => p.update());
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    let p1 = particles[i];
+                    let p2 = particles[j];
+                    if (p1.isDisturbed || p2.isDisturbed) continue;
+
+                    let dx = p1.x - p2.x;
+                    let dy = p1.y - p2.y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < connectionDistance) {
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        let alpha = 1 - (dist / connectionDistance);
+                        ctx.strokeStyle = `rgba(0, 184, 176, ${alpha * 0.2})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+                particles[i].draw();
+            }
+            requestAnimationFrame(animateCanvas);
+        }
+
+        resizeCanvas();
+        animateCanvas();
+
+        // ==========================================
+        // ANIMACIONES GSAP (Scroll)
+        // ==========================================
+
+        // Desvanecer el texto del Hero al hacer scroll hacia abajo
+        gsap.to(".hero-content", {
+            scrollTrigger: {
+                trigger: "#hero",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            },
+            opacity: 0,
+            y: 100
+        });
+
+        // 1. Parallax Split Hero (Pinned Zoom)
+        let tlHero = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#parallax",
+                start: "top 10%", // El "corte" frena a plena vista, un poco antes del borde superior
+                end: "+=100%",
+                pin: true,
+                scrub: true,
+                anticipatePin: 1
+            }
+        });
+        // Scale para el background para el momento "sticky/zoom"
+        tlHero.fromTo("#hero-img-left", { scale: 1 }, { scale: 1.15, ease: "none" }, 0);
+        tlHero.to("#hero-img-float", {
+            scale: window.innerWidth > 768 ? 2 : 1.5,
+            x: window.innerWidth > 768 ? "-20vw" : "-5vw",
+            y: "0vh",
+            rotation: 0,
+            ease: "power2.inOut"
+        }, 0);
+
+        // 2. Text Overlay Merge
+        let tlMerge = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#merge-section",
+                start: "top 10%",
+                end: "+=100%",
+                pin: true,
+                scrub: true,
+                anticipatePin: 1
+            }
+        });
+        // Parallax de la imagen de fondo de la sección Merge
+        tlMerge.to("#merge-bg", { yPercent: -20, ease: "none" }, 0);
+        // Convergencia del texto (Starts closer so it doesn't get cut in smaller screens immediately)
+        tlMerge.fromTo("#text-left", { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 2, ease: "power2.out" }, 0);
+        tlMerge.fromTo("#text-right", { x: 80, opacity: 0 }, { x: 0, opacity: 1, duration: 2, ease: "power2.out" }, 0);
+        tlMerge.to({}, { duration: 1 }); // Pausa visual
+        tlMerge.to("#merge-text-container", { opacity: 0, scale: 1.1, duration: 1.5, ease: "power2.inOut" });
+
+        // 2.5 Formation Section Parallax
+        let tlFormation = gsap.timeline({
+            scrollTrigger: { trigger: "#formation-section", start: "top bottom", end: "bottom top", scrub: true }
+        });
+
+        // Mover la imagen de fondo hacia abajo
+        tlFormation.to("#formation-bg", { y: "20%", ease: "none" }, 0);
+
+        // Efecto reveal ligero en los textos al entrar a la sección
+        gsap.from("#formation-label, #formation-title, #formation-btn", {
+            scrollTrigger: {
+                trigger: "#formation-section",
+                start: "top 70%",
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+
+        // 2.6 Bloques de Características Extras (Features) Alternados
+        const featureSections = gsap.utils.toArray('.feature-section');
+
+        featureSections.forEach((section, i) => {
+            const parallaxImg = section.querySelector('.img-parallax');
+            const textContent = section.querySelector('.text-content');
+
+            // Background Parallax Effects based on index
+            if (parallaxImg) {
+                let imgAnimConfig = {
+                    yPercent: 20, // Parallax de scroll standard default
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: true
+                    }
+                };
+
+                // Alternar animaciones para romper la simetría en overlay images
+                if (i === 1) {
+                    gsap.set(parallaxImg, { scale: 1.15 }); // Zoom in progresivo
+                    imgAnimConfig.scale = 1;
+                    imgAnimConfig.yPercent = 0;
+                } else if (i === 2) {
+                    imgAnimConfig.yPercent = -20; // Parallax inverso
+                } else if (i === 3) {
+                    gsap.set(parallaxImg, { scale: 1.1 });
+                    imgAnimConfig.yPercent = 10;
+                    imgAnimConfig.rotation = 1; // Leve rotación
+                }
+
+                gsap.to(parallaxImg, imgAnimConfig);
+            }
+
+            // Central Overlay Text Entry
+            if (textContent) {
+                let textAnimConfig = {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 85%", // Disparar antes para que no parezca roto
+                    },
+                    opacity: 0,
+                    duration: 1.2,
+                    ease: "power2.out"
+                };
+
+                // Flow direccional (abajo, izquierda, scale, derecha)
+                if (i === 0) {
+                    textAnimConfig.y = 40;
+                } else if (i === 1) {
+                    textAnimConfig.x = -30;
+                } else if (i === 2) {
+                    textAnimConfig.scale = 0.95;
+                    textAnimConfig.y = 20;
+                } else {
+                    textAnimConfig.x = 30;
+                }
+
+                gsap.from(textContent, textAnimConfig);
+            }
+        });
+
+        // 3. Blurred Text Reveal
+        let tlBlur; // Variable para guardar la timeline y reiniciarla al cambiar idioma
+        function setupBlurText() {
+            const blurTextContainer = document.getElementById('blur-text');
+            // Obtener texto original dependiendo del idioma actual
+            const textContent = translations[currentLang]['vision_text'];
+
+            const words = textContent.split(' ');
+            blurTextContainer.innerHTML = '';
+
+            words.forEach(word => {
+                const span = document.createElement('span');
+                span.innerText = word;
+                span.style.display = 'inline-block';
+                span.style.willChange = 'transform, filter, opacity';
+                blurTextContainer.appendChild(span);
+
+                // Add an explicit space element
+                const space = document.createTextNode(' ');
+                blurTextContainer.appendChild(space);
+            });
+
+            const wordSpans = blurTextContainer.querySelectorAll('span');
+
+            gsap.set(wordSpans, { filter: 'blur(8px)', opacity: 0, y: 20 });
+
+            if (tlBlur) tlBlur.kill(); // Matar animación previa si se recarga
+
+            tlBlur = gsap.timeline({
+                // Start a bit lower (top 85%) so it doesn't trigger late or awkwardly
+                scrollTrigger: { trigger: "#blur-section", start: "top 85%" }
+            });
+
+            tlBlur.to(wordSpans, { filter: 'blur(0px)', opacity: 1, y: 0, stagger: 0.08, ease: "power2.out", duration: 0.8 });
+            tlBlur.to("#blur-subtext", { opacity: 1, y: -10, duration: 1, ease: "power1.out" }, "-=0.2");
+        }
+
+        // JS for Mobile Navbar Menu Overlay
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMobileMenuOpen = false;
+
+        mobileMenuBtn.addEventListener('click', () => {
+            isMobileMenuOpen = !isMobileMenuOpen;
+            if (isMobileMenuOpen) {
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                isMobileMenuOpen = false;
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+            });
+        });
+
+        // Inicializar texto blur
+        setupBlurText();
+
+        // ==========================================
+        // INICIALIZACIÓN DE PANNELLUM (VISTA 360)
+        // ==========================================
+        pannellum.viewer('panorama-container', {
+            "type": "equirectangular",
+            "panorama": "/imagen_360.jpg", // ⚠️ CAMBIA ESTO por el nombre real de tu imagen en la carpeta public
+            "autoLoad": true, // Muestra loader automáticamente mientras carga la de 2.3MB
+            "showFullscreenCtrl": true,
+            "mouseZoom": false,
+            "strings": {
+                "loadingLabel": "Cargando vista 360...",
+                "bylineLabel": "CEMA"
+            }
+        });
+
+    </script>
+</body>
+
+</html>
