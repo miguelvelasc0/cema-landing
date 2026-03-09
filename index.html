@@ -113,11 +113,9 @@
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-12 py-4 transition-all duration-300"
         id="navbar">
-        <!-- Logotipo CEMA Textual -->
-        <div class="flex items-center gap-1 z-50 relative">
-            <span class="text-3xl font-light tracking-widest text-cema-cyan">C</span>
-            <span
-                class="text-3xl font-light tracking-widest text-cema-navy dark:text-white transition-colors">EMA</span>
+        <!-- Logotipo CEMA Imagen -->
+        <div class="flex items-center z-50 relative">
+            <img src="/CEMA%20Logo.png" alt="CEMA Logo" class="h-8 md:h-10 object-contain">
         </div>
 
         <!-- Enlaces (Ocultos en móvil) -->
@@ -202,199 +200,145 @@
     </header>
 
     <!-- ==========================================
-         SECCIÓN 1: PARALLAX SPLIT HERO
+         SECCIÓN 1: INTRODUCCIÓN (Estilo Clean)
     ========================================== -->
     <section id="parallax"
-        class="relative w-full h-screen flex flex-col md:flex-row overflow-hidden bg-white dark:bg-[#06101c] transition-colors duration-500">
-        <!-- Mitad Izquierda (Imagen Quirófano/Instalaciones) -->
-        <div class="w-full md:w-1/2 h-1/2 md:h-full relative clip-overflow">
-            <div id="hero-img-left" class="absolute top-[-20%] left-0 w-full h-[140%] bg-cover bg-center"
-                style="background-image: url('/recepcion.jpg');">
+        class="relative w-full py-24 bg-white dark:bg-[#06101c] transition-colors duration-500 flex items-center">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-12">
+            <div class="w-full md:w-1/2">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl aspect-video md:aspect-square">
+                    <img src="/garden.webp" alt="Recepción CEMA" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-cema-cyan/10 mix-blend-multiply dark:mix-blend-overlay"></div>
+                </div>
             </div>
-            <div class="absolute inset-0 bg-cema-cyan/10 mix-blend-multiply dark:mix-blend-overlay"></div>
+            <div class="w-full md:w-1/2 space-y-6">
+                <span class="text-cema-cyan font-bold tracking-widest text-sm uppercase"
+                    data-i18n="location_badge">Ubicación Privilegiada</span>
+                <h2 class="text-4xl md:text-5xl font-light text-cema-navy dark:text-white leading-tight"
+                    data-i18n="location_title">
+                    Localizado estratégicamente junto a <span class="font-bold">Garden Santa Fe.</span>
+                </h2>
+                <div class="w-20 h-1 bg-cema-cyan rounded"></div>
+                <p class="text-lg text-cema-gray dark:text-gray-300 font-light" data-i18n="location_desc">
+                    Acceso inmejorable en la zona corporativa y médica más exclusiva, brindando comodidad, seguridad y
+                    prestigio a todos nuestros visitantes.
+                </p>
+            </div>
         </div>
+    </section>
 
-        <!-- Mitad Derecha (Texto e Imagen Flotante) -->
-        <div class="w-full md:w-1/2 h-1/2 md:h-full relative flex items-center justify-center overflow-hidden">
-            <div class="relative z-10 text-center px-8">
-                <p class="text-xl md:text-2xl font-medium text-cema-navy dark:text-gray-200" data-i18n="location_info">
-                    Localizado estratégicamente junto a Garden Santa Fe.
+    <!-- ==========================================
+         SECCIÓN 2: BANNER IMPACTO
+    ========================================== -->
+    <section id="merge-section"
+        class="relative w-full py-32 bg-cema-navy overflow-hidden flex items-center justify-center text-center">
+        <!-- Fondo oscuro elegante -->
+        <div class="absolute inset-0 w-full h-full bg-cover bg-center opacity-20 mix-blend-screen"
+            style="background-image: url('/cirugia.webp');">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-cema-navy via-transparent to-cema-navy"></div>
+
+        <div class="relative z-10 max-w-4xl px-4 banner-reveal">
+            <h2 class="text-5xl md:text-7xl lg:text-8xl font-light text-white tracking-widest leading-tight"
+                data-i18n="banner_tech">
+                TECNOLOGÍA <br class="md:hidden">
+                <span class="font-bold text-cema-cyan">MÉDICA</span>
+            </h2>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECCIÓN 3: BENTO GRID (4 Características)
+    ========================================== -->
+    <section
+        class="relative w-full py-24 bg-cema-light dark:bg-cema-navy transition-colors duration-500 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <!-- Título Sección -->
+            <div class="mb-16 text-center reveal-up">
+                <h2 class="text-3xl md:text-5xl font-light text-cema-navy dark:text-white mb-4" data-i18n="grid_title">
+                    Nuestro <span class="font-bold text-cema-cyan">Entorno</span>
+                </h2>
+                <p class="text-cema-gray dark:text-gray-300 max-w-2xl mx-auto font-light text-lg"
+                    data-i18n="grid_subtitle">
+                    Espacios diseñados meticulosamente para la excelencia, la eficiencia y el aprendizaje práctico
+                    superior.
                 </p>
             </div>
 
-            <!-- Título de fondo sutil -->
-            <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
-                <h2 class="text-6xl md:text-9xl font-bold text-cema-navy dark:text-white text-center leading-none">
-                    SANTA<br>FE</h2>
-            </div>
+            <!-- Grid 2x2 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Card 1 -->
+                <div
+                    class="bg-white dark:bg-[#0A1C2E] border border-gray-100 dark:border-white/5 rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow reveal-up">
+                    <div class="h-48 md:h-64 overflow-hidden relative">
+                        <img src="/robots.webp" alt="Capacitación"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-cema-cyan/10 pointer-events-none"></div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-cema-navy dark:text-white mb-3" data-i18n="card1_title">
+                            Moderno y Funcional</h3>
+                        <p class="text-cema-gray dark:text-gray-300 font-light" data-i18n="card1_desc">
+                            Instalaciones equipadas con la última tecnología médica y herramientas de simulación,
+                            maximizando la curva de aprendizaje práctico y teórico.
+                        </p>
+                    </div>
+                </div>
 
-            <!-- Imagen Flotante (Aula/Entrenamiento) CON FILTRO -->
-            <div id="hero-img-float"
-                class="relative z-10 w-48 h-64 md:w-64 md:h-80 shadow-2xl rounded-sm overflow-hidden transform rotate-2 border-4 border-white dark:border-cema-navy"
-                style="filter: brightness(0.4) saturate(0.3);">
-                <div class="w-full h-full bg-cover bg-center" style="background-image: url('/garden.webp');">
+                <!-- Card 2 -->
+                <div class="bg-white dark:bg-[#0A1C2E] border border-gray-100 dark:border-white/5 rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow reveal-up"
+                    style="transition-delay: 100ms;">
+                    <div class="h-48 md:h-64 overflow-hidden relative">
+                        <img src="/recepcion.webp" alt="Aprendizaje"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-cema-cyan/10 pointer-events-none"></div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-cema-navy dark:text-white mb-3" data-i18n="card2_title">
+                            Aprendizaje Óptimo</h3>
+                        <p class="text-cema-gray dark:text-gray-300 font-light" data-i18n="card2_desc">
+                            Cuidamos cada detalle arquitectónico ergonómico, garantizando un ambiente que estimula la
+                            concentración y retención del conocimiento.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white dark:bg-[#0A1C2E] border border-gray-100 dark:border-white/5 rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow reveal-up border-t md:border-t-0"
+                    style="transition-delay: 200ms;">
+                    <div class="h-48 md:h-64 overflow-hidden relative">
+                        <img src="/formacionydesarrollo.webp" alt="Interacción"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-cema-cyan/10 pointer-events-none"></div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-cema-navy dark:text-white mb-3" data-i18n="card3_title">
+                            Interacción Continua</h3>
+                        <p class="text-cema-gray dark:text-gray-300 font-light" data-i18n="card3_desc">
+                            Espacios colaborativos y salas diseñadas para conectar a profesionales de la salud,
+                            fomentando discusiones y creando networking continuo.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white dark:bg-[#0A1C2E] border border-gray-100 dark:border-white/5 rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow reveal-up"
+                    style="transition-delay: 300ms;">
+                    <div class="h-48 md:h-64 overflow-hidden relative">
+                        <img src="/robot.webp" alt="Entrenamiento"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-cema-cyan/10 pointer-events-none"></div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-cema-navy dark:text-white mb-3" data-i18n="card4_title">Alto
+                            Nivel</h3>
+                        <p class="text-cema-gray dark:text-gray-300 font-light" data-i18n="card4_desc">
+                            Nuestras instalaciones cuentan con simuladores quirúrgicos y laboratorios húmedos diseñados
+                            bajo estándares internacionales de educación.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- ==========================================
-         SECCIÓN 2: TEXT OVERLAY MERGE
-    ========================================== -->
-    <section id="merge-section" class="relative w-full h-screen bg-cema-navy overflow-hidden">
-        <!-- Imagen Full-Bleed -->
-        <div id="merge-bg"
-            class="absolute inset-0 w-full h-[120%] top-[-10%] bg-cover bg-center opacity-30 mix-blend-screen"
-            style="background-image: url('/cirugia.png');">
-        </div>
-
-        <div id="merge-text-container"
-            class="absolute inset-0 flex items-center justify-center w-full h-full overflow-hidden">
-            <div class="relative w-full max-w-6xl flex justify-between items-center px-4 h-64 md:h-96">
-                <!-- Palabra Izquierda -->
-                <span id="text-left"
-                    class="text-white font-light text-3xl sm:text-4xl md:text-7xl lg:text-8xl tracking-widest absolute left-4 md:left-10 whitespace-nowrap -mt-10 md:-mt-24"
-                    data-i18n="merge_left">
-                    TECNOLOGÍA
-                </span>
-                <!-- Palabra Derecha (Acento Cian) -->
-                <span id="text-right"
-                    class="text-cema-cyan font-bold text-3xl sm:text-4xl md:text-7xl lg:text-8xl tracking-widest absolute right-4 md:right-10 whitespace-nowrap mt-16 md:mt-32"
-                    data-i18n="merge_right">
-                    MÉDICA
-                </span>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================
-         SECCIÓN NUEVA: ESPACIO DE FORMACIÓN
-    ========================================== -->
-    <section class="relative w-full h-screen overflow-hidden bg-cema-navy" id="formation-section">
-        <!-- Imagen Parallax -->
-        <div id="formation-bg" class="absolute inset-0 w-full h-[120%] bg-cover bg-center opacity-60 mix-blend-overlay"
-            style="background-image: url('/formacionydesarrollo.jpg'); top: -10%;">
-        </div>
-
-        <!-- Capa de Oscurecimiento Gradiente -->
-        <div class="absolute inset-0 bg-gradient-to-r from-cema-navy/90 via-cema-navy/60 to-transparent"></div>
-
-        <!-- Contenido -->
-        <div class="relative z-10 flex items-center h-full px-8 md:px-24">
-            <div class="max-w-2xl">
-                <span class="text-cema-cyan font-bold tracking-widest text-sm uppercase mb-4 block"
-                    id="formation-label">CEMA Santa Fe</span>
-                <h2 class="text-white text-4xl md:text-6xl font-light leading-tight mb-8" id="formation-title">
-                    Un espacio diseñado para la <span class="font-bold text-gradient-cema dark:text-white"
-                        style="background-image: linear-gradient(144.5deg, #00B8B0 28%, #ffffff 115%);">formación</span>
-                    y el desarrollo profesional.
-                </h2>
-                <button class="btn-cema rounded-full px-8 py-3 bg-white/5 backdrop-blur-sm" id="formation-btn">
-                    <span class="text-white font-semibold">Conoce nuestras instalaciones</span>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================
-         SECCIÓN 2.6: CARACTERÍSTICAS (OVERLAY)
-    ========================================== -->
-
-    <!-- 1. Capacitación -->
-    <section
-        class="relative w-full h-[80vh] md:h-[70vh] flex items-center justify-center overflow-hidden feature-section text-center">
-        <!-- Background Imagen -->
-        <div class="img-parallax w-full h-[120%] bg-cover bg-center absolute inset-0 top-[-10%]"
-            style="background-image: url('/robots.jpg');"></div>
-
-        <!-- Gradientes Oscurecimiento -->
-        <div class="absolute inset-0 bg-cema-navy/70 mix-blend-multiply"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-cema-navy/90 via-transparent to-cema-navy/90"></div>
-
-        <!-- Text Content Centro -->
-        <div class="relative z-10 max-w-2xl px-8 text-content">
-            <h3 class="text-3xl md:text-5xl font-light text-white mb-6 leading-tight drop-shadow-lg">
-                Capacitación en un entorno moderno y <span class="font-bold text-cema-cyan">funcional</span>
-            </h3>
-            <div class="h-1 w-20 bg-cema-cyan rounded mb-6 mx-auto"></div>
-            <p class="text-gray-300 text-lg md:text-xl font-light leading-relaxed drop-shadow-md">
-                Instalaciones equipadas con la última tecnología médica y herramientas de simulación, diseñadas
-                específicamente para maximizar su curva de aprendizaje práctico y teórico.
-            </p>
-        </div>
-    </section>
-
-    <!-- 2. Aprendizaje -->
-    <section
-        class="relative w-full h-[80vh] md:h-[70vh] flex items-center justify-center overflow-hidden feature-section text-center">
-        <!-- Background Imagen -->
-        <div class="img-parallax w-full h-[120%] bg-cover bg-center absolute inset-0 top-[-10%]"
-            style="background-image: url('/robots.jpg');"></div>
-
-        <!-- Gradientes Oscurecimiento -->
-        <div class="absolute inset-0 bg-cema-navy/70 mix-blend-multiply"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-cema-navy/90 via-cema-navy/40 to-cema-navy/90"></div>
-
-        <!-- Text Content Centro -->
-        <div class="relative z-10 max-w-2xl px-8 text-content">
-            <h3 class="text-3xl md:text-5xl font-light text-white mb-6 leading-tight drop-shadow-lg">
-                Pensada para una experiencia de aprendizaje <span class="font-bold text-cema-cyan">óptima</span>
-            </h3>
-            <div class="h-1 w-20 bg-cema-cyan rounded mb-6 mx-auto"></div>
-            <p class="text-gray-300 text-lg md:text-xl font-light leading-relaxed drop-shadow-md">
-                Cuidamos cada detalle desde la acústica hasta la ergonomía del mobiliario, garantizando un ambiente que
-                estimula la concentración y retención del conocimiento.
-            </p>
-        </div>
-    </section>
-
-    <!-- 3. Interacción -->
-    <section
-        class="relative w-full h-[80vh] md:h-[70vh] flex items-center justify-center overflow-hidden feature-section text-center">
-        <!-- Background Imagen -->
-        <div class="img-parallax w-full h-[120%] bg-cover bg-center absolute inset-0 top-[-10%]"
-            style="background-image: url('/robots.jpg');"></div>
-
-        <!-- Gradientes Oscurecimiento -->
-        <div class="absolute inset-0 bg-cema-navy/70 mix-blend-multiply"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-cema-navy/90 via-transparent to-cema-navy/90"></div>
-
-        <!-- Text Content Centro -->
-        <div class="relative z-10 max-w-2xl px-8 text-content">
-            <h3 class="text-3xl md:text-5xl font-light text-white mb-6 leading-tight drop-shadow-lg">
-                Áreas que fomentan la interacción y el intercambio de <span
-                    class="font-bold text-cema-cyan">ideas</span>
-            </h3>
-            <div class="h-1 w-20 bg-cema-cyan rounded mb-6 mx-auto"></div>
-            <p class="text-gray-300 text-lg md:text-xl font-light leading-relaxed drop-shadow-md">
-                Espacios colaborativos y salas de networking diseñadas para conectar a profesionales de la salud,
-                fomentando discusiones productivas y creando redes de contacto valiosas.
-            </p>
-        </div>
-    </section>
-
-    <!-- 4. Entrenamiento Alto Nivel -->
-    <section
-        class="relative w-full h-[80vh] md:h-[70vh] flex items-center justify-center overflow-hidden feature-section text-center">
-        <!-- Background Imagen -->
-        <div class="img-parallax w-full h-[120%] bg-cover bg-center absolute inset-0 top-[-10%]"
-            style="background-image: url('/robots.jpg');"></div>
-
-        <!-- Gradientes Oscurecimiento -->
-        <div class="absolute inset-0 bg-cema-navy/70 mix-blend-multiply"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-cema-navy/90 via-cema-navy/40 to-cema-navy/90"></div>
-
-        <!-- Text Content Centro -->
-        <div class="relative z-10 max-w-2xl px-8 text-content">
-            <h3 class="text-3xl md:text-5xl font-light text-white mb-6 leading-tight drop-shadow-lg">
-                Espacios especializados para entrenamiento médico de <span class="font-bold text-cema-cyan">alto
-                    nivel</span>
-            </h3>
-            <div class="h-1 w-20 bg-cema-cyan rounded mb-6 mx-auto"></div>
-            <p class="text-gray-300 text-lg md:text-xl font-light leading-relaxed drop-shadow-md">
-                Nuestras instalaciones cuentan con simuladores quirúrgicos, anfiteatros de observación y laboratorios
-                húmedos diseñados bajo estándares internacionales de educación continua.
-            </p>
         </div>
     </section>
 
@@ -483,11 +427,23 @@
                 hero_title: 'Donde la tecnología médica se convierte en experiencia clínica.',
                 hero_subtitle: 'Impulsamos la excelencia médica a través de entrenamiento especializado, tecnología avanzada y actualización continua.',
                 scroll_down: 'Scroll',
-                merge_left: 'TECNOLOGÍA',
-                merge_right: 'MÉDICA',
+                location_badge: 'Ubicación Privilegiada',
+                location_title: 'Localizado estratégicamente junto a <span class="font-bold">Garden Santa Fe.</span>',
+                location_desc: 'Acceso inmejorable en la zona corporativa y médica más exclusiva, brindando comodidad, seguridad y prestigio a todos nuestros visitantes.',
+                banner_tech: 'TECNOLOGÍA <br class="md:hidden">\n                <span class="font-bold text-cema-cyan">MÉDICA</span>',
+                grid_title: 'Nuestro <span class="font-bold text-cema-cyan">Entorno</span>',
+                grid_subtitle: 'Espacios diseñados meticulosamente para la excelencia, la eficiencia y el aprendizaje práctico superior.',
+                card1_title: 'Moderno y Funcional',
+                card1_desc: 'Instalaciones equipadas con la última tecnología médica y herramientas de simulación, maximizando la curva de aprendizaje práctico y teórico.',
+                card2_title: 'Aprendizaje Óptimo',
+                card2_desc: 'Cuidamos cada detalle arquitectónico ergonómico, garantizando un ambiente que estimula la concentración y retención del conocimiento.',
+                card3_title: 'Interacción Continua',
+                card3_desc: 'Espacios colaborativos y salas diseñadas para conectar a profesionales de la salud, fomentando discusiones y creando networking continuo.',
+                card4_title: 'Alto Nivel',
+                card4_desc: 'Nuestras instalaciones cuentan con simuladores quirúrgicos y laboratorios húmedos diseñados bajo estándares internacionales de educación.',
                 vision_text: 'Consolidarnos como un centro de referencia en entrenamiento médico avanzado, reconocido por su innovación, calidad académica y liderazgo tecnológico.',
                 vision_subtext: 'El futuro de la medicina',
-                tour_360_title: 'Recorrido 360°',
+                tour_360_title: 'Recorrido <span class="font-bold text-cema-cyan">360°</span>',
                 footer: '© 2026 Centro Especializado Médico Avanzado. Todos los derechos reservados.'
             },
             en: {
@@ -499,11 +455,23 @@
                 hero_title: 'Where medical technology becomes clinical experience.',
                 hero_subtitle: 'Driving medical excellence through specialized training, advanced technology, and continuous learning.',
                 scroll_down: 'Scroll',
-                merge_left: 'MEDICAL',
-                merge_right: 'TECHNOLOGY',
+                location_badge: 'Prime Location',
+                location_title: 'Strategically located next to <span class="font-bold">Garden Santa Fe.</span>',
+                location_desc: 'Unbeatable access in the most exclusive corporate and medical area, providing comfort, security, and prestige to all our visitors.',
+                banner_tech: 'MEDICAL <br class="md:hidden">\n                <span class="font-bold text-cema-cyan">TECHNOLOGY</span>',
+                grid_title: 'Our <span class="font-bold text-cema-cyan">Environment</span>',
+                grid_subtitle: 'Spaces meticulously designed for excellence, efficiency, and superior practical learning.',
+                card1_title: 'Modern & Functional',
+                card1_desc: 'Facilities equipped with the latest medical technology and simulation tools, maximizing the practical and theoretical learning curve.',
+                card2_title: 'Optimal Learning',
+                card2_desc: 'We care for every ergonomic architectural detail, ensuring an environment that stimulates concentration and knowledge retention.',
+                card3_title: 'Continuous Interaction',
+                card3_desc: 'Collaborative spaces and rooms designed to connect health professionals, fostering discussions and creating continuous networking.',
+                card4_title: 'High Level',
+                card4_desc: 'Our facilities feature surgical simulators and wet labs designed under continuous international education standards.',
                 vision_text: 'To consolidate ourselves as a reference center in advanced medical training, recognized for innovation, academic quality, and technological leadership.',
                 vision_subtext: 'The future of medicine',
-                tour_360_title: '360° Tour',
+                tour_360_title: '<span class="font-bold text-cema-cyan">360°</span> Tour',
                 footer: '© 2026 Advanced Medical Specialized Center. All rights reserved.'
             }
         };
@@ -515,7 +483,7 @@
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (translations[currentLang][key]) {
-                    element.innerText = translations[currentLang][key];
+                    element.innerHTML = translations[currentLang][key];
                 }
             });
             // Al actualizar textos, necesitamos recalcular el texto fragmentado para el blur
@@ -663,129 +631,30 @@
             y: 100
         });
 
-        // 1. Parallax Split Hero (Pinned Zoom)
-        let tlHero = gsap.timeline({
-            scrollTrigger: {
-                trigger: "#parallax",
-                start: "top 10%", // El "corte" frena a plena vista, un poco antes del borde superior
-                end: "+=100%",
-                pin: true,
-                scrub: true,
-                anticipatePin: 1
-            }
+        // 1. Animaciones suaves al entrar en viewport
+        gsap.utils.toArray('.reveal-up').forEach(elem => {
+            gsap.from(elem, {
+                scrollTrigger: {
+                    trigger: elem,
+                    start: "top 85%",
+                },
+                y: 40,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
         });
-        // Scale para el background para el momento "sticky/zoom"
-        tlHero.fromTo("#hero-img-left", { scale: 1 }, { scale: 1.15, ease: "none" }, 0);
-        tlHero.to("#hero-img-float", {
-            scale: window.innerWidth > 768 ? 2 : 1.5,
-            x: window.innerWidth > 768 ? "-20vw" : "-5vw",
-            y: "0vh",
-            rotation: 0,
-            ease: "power2.inOut"
-        }, 0);
 
-        // 2. Text Overlay Merge
-        let tlMerge = gsap.timeline({
+        // 2. Revelado del Banner de Tecnología Médica
+        gsap.from(".banner-reveal", {
             scrollTrigger: {
                 trigger: "#merge-section",
-                start: "top 10%",
-                end: "+=100%",
-                pin: true,
-                scrub: true,
-                anticipatePin: 1
-            }
-        });
-        // Parallax de la imagen de fondo de la sección Merge
-        tlMerge.to("#merge-bg", { yPercent: -20, ease: "none" }, 0);
-        // Convergencia del texto (Starts closer so it doesn't get cut in smaller screens immediately)
-        tlMerge.fromTo("#text-left", { x: -80, opacity: 0 }, { x: 0, opacity: 1, duration: 2, ease: "power2.out" }, 0);
-        tlMerge.fromTo("#text-right", { x: 80, opacity: 0 }, { x: 0, opacity: 1, duration: 2, ease: "power2.out" }, 0);
-        tlMerge.to({}, { duration: 1 }); // Pausa visual
-        tlMerge.to("#merge-text-container", { opacity: 0, scale: 1.1, duration: 1.5, ease: "power2.inOut" });
-
-        // 2.5 Formation Section Parallax
-        let tlFormation = gsap.timeline({
-            scrollTrigger: { trigger: "#formation-section", start: "top bottom", end: "bottom top", scrub: true }
-        });
-
-        // Mover la imagen de fondo hacia abajo
-        tlFormation.to("#formation-bg", { y: "20%", ease: "none" }, 0);
-
-        // Efecto reveal ligero en los textos al entrar a la sección
-        gsap.from("#formation-label, #formation-title, #formation-btn", {
-            scrollTrigger: {
-                trigger: "#formation-section",
                 start: "top 70%",
             },
-            y: 50,
+            scale: 0.95,
             opacity: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: "power3.out"
-        });
-
-        // 2.6 Bloques de Características Extras (Features) Alternados
-        const featureSections = gsap.utils.toArray('.feature-section');
-
-        featureSections.forEach((section, i) => {
-            const parallaxImg = section.querySelector('.img-parallax');
-            const textContent = section.querySelector('.text-content');
-
-            // Background Parallax Effects based on index
-            if (parallaxImg) {
-                let imgAnimConfig = {
-                    yPercent: 20, // Parallax de scroll standard default
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top bottom",
-                        end: "bottom top",
-                        scrub: true
-                    }
-                };
-
-                // Alternar animaciones para romper la simetría en overlay images
-                if (i === 1) {
-                    gsap.set(parallaxImg, { scale: 1.15 }); // Zoom in progresivo
-                    imgAnimConfig.scale = 1;
-                    imgAnimConfig.yPercent = 0;
-                } else if (i === 2) {
-                    imgAnimConfig.yPercent = -20; // Parallax inverso
-                } else if (i === 3) {
-                    gsap.set(parallaxImg, { scale: 1.1 });
-                    imgAnimConfig.yPercent = 10;
-                    imgAnimConfig.rotation = 1; // Leve rotación
-                }
-
-                gsap.to(parallaxImg, imgAnimConfig);
-            }
-
-            // Central Overlay Text Entry
-            if (textContent) {
-                let textAnimConfig = {
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top 85%", // Disparar antes para que no parezca roto
-                    },
-                    opacity: 0,
-                    duration: 1.2,
-                    ease: "power2.out"
-                };
-
-                // Flow direccional (abajo, izquierda, scale, derecha)
-                if (i === 0) {
-                    textAnimConfig.y = 40;
-                } else if (i === 1) {
-                    textAnimConfig.x = -30;
-                } else if (i === 2) {
-                    textAnimConfig.scale = 0.95;
-                    textAnimConfig.y = 20;
-                } else {
-                    textAnimConfig.x = 30;
-                }
-
-                gsap.from(textContent, textAnimConfig);
-            }
+            duration: 1.5,
+            ease: "power2.out"
         });
 
         // 3. Blurred Text Reveal
