@@ -100,7 +100,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
+            z-index: 10;
             pointer-events: none;
         }
 
@@ -174,24 +174,30 @@
     ========================================== -->
     <header id="hero"
         class="relative w-full h-screen flex flex-col items-center justify-center text-center px-5 overflow-hidden">
+        <!-- Background Video -->
+        <video autoplay loop muted playsinline
+            class="absolute top-0 left-0 w-full h-full object-cover z-0 pointer-events-none">
+            <source src="/public/hero.mp4" type="video/mp4">
+        </video>
+
         <!-- Canvas para la animación de fondo (Nodos/Red médica) -->
         <canvas id="bg-canvas"></canvas>
 
         <!-- Overlay de contraste oscuro (estilo viñeta) para descansar la vista tras el logotipo principal -->
         <div
-            class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.1)_0%,rgba(13,31,53,0.7)_100%)] z-[1] pointer-events-none dark:opacity-100 opacity-40">
+            class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.1)_0%,rgba(13,31,53,0.7)_100%)] z-[20] pointer-events-none dark:opacity-100 opacity-40">
         </div>
 
         <!-- Halo ligero centrado debajo del logo y subtexto para iluminar suavemente la zona -->
-        <div class="absolute inset-0 z-[2] pointer-events-none"
+        <div class="absolute inset-0 z-[30] pointer-events-none"
             style="background: radial-gradient(ellipse 60% 30% at 50% 68%, rgba(255,255,255,0.06) 0%, transparent 100%);">
         </div>
 
-        <div class="relative z-10 flex flex-col items-center hero-content">
+        <div class="relative z-[40] flex flex-col items-center hero-content">
             <!-- Título Principal -->
             <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight max-w-4xl text-gradient-cema mb-6"
                 data-i18n="hero_title">
-                Donde la tecnología médica se convierte en experiencia clínica.
+                Conocimiento que transforma la medicina.
             </h1>
 
             <div class="z-20 w-full flex items-center justify-center pointer-events-none mb-8" id="hero-logo-wrapper">
@@ -210,7 +216,7 @@
 
 
             <!-- Subtítulo -->
-            <p class="text-base md:text-lg font-light text-cema-gray dark:text-gray-300 max-w-2xl mb-10"
+            <p class="text-base md:text-lg font-light text-cema-gray dark:text-black max-w-2xl mb-10"
                 data-i18n="hero_subtitle">
                 Impulsamos la excelencia médica a través de entrenamiento especializado, tecnología avanzada y
                 actualización continua.
@@ -409,19 +415,56 @@
         </div>
     </section>
 
-    <!-- Footer Simple -->
-    <footer
-        class="py-12 bg-white dark:bg-cema-navy text-center border-t border-gray-200 dark:border-gray-800 transition-colors duration-500 flex flex-col items-center justify-center gap-4">
-        <div class="text-2xl font-light tracking-widest text-cema-cyan">CEMA</div>
-        <p class="text-sm text-cema-gray dark:text-gray-400 max-w-lg mx-auto px-4" data-i18n="footer_address">
-            C. Guillermo Gonzalez Camarena 1100, Santa Fe, Sta Fé, Álvaro Obregón, 01210 Ciudad de México, CDMX
-        </p>
-        <p class="text-sm text-cema-gray dark:text-gray-400 max-w-lg mx-auto px-4" data-i18n="footer_address">
-            Contacto: Andrea Miranda <a href="tel:+5610537216">+56 1053 7216</a>
-        </p>
-        <p class="text-sm text-gray-500" data-i18n="footer">© 2026 Centro Especializado Médico Avanzado. Todos los
-            derechos reservados.</p>
+    <!-- Footer Completo -->
+    <footer class="py-12 bg-white dark:bg-cema-navy border-t border-gray-200 dark:border-gray-800 transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 text-center md:text-left">
+            <!-- Columna 1: Info -->
+            <div class="flex flex-col items-center md:items-start gap-4">
+                <div class="text-2xl font-light tracking-widest text-cema-cyan">CEMA</div>
+                <p class="text-sm text-cema-gray dark:text-gray-400" data-i18n="footer_address">
+                    C. Guillermo Gonzalez Camarena 1100, Santa Fe, Sta Fé, Álvaro Obregón, 01210 Ciudad de México, CDMX
+                </p>
+                <div class="text-sm text-cema-gray dark:text-gray-400 flex flex-col items-center md:items-start gap-1">
+                    <span data-i18n="footer_contact">Contacto: Andrea Miranda</span>
+                    <a href="tel:+5610537216" class="hover:text-cema-cyan transition-colors font-semibold">+56 1053 7216</a>
+                </div>
+                <!-- Redes Sociales -->
+                <div class="flex items-center gap-4 mt-2">
+                    <a href="https://www.instagram.com/cema_lat/" target="_blank" rel="noopener noreferrer" class="text-cema-gray hover:text-[#E1306C] transition-colors" title="Instagram">
+                        <i data-lucide="instagram" class="w-6 h-6"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Columna 2: Mapa -->
+            <div class="md:col-span-2 w-full h-48 md:h-64 rounded-xl overflow-hidden shadow-sm">
+                <iframe 
+                    src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=es&amp;q=Guillermo%20Gonzalez%20Camarena%201100,%20Santa%20Fe,%20Ciudad%20de%20Mexico+(CEMA)&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-200 dark:border-gray-800 pt-8 mt-8 text-center">
+            <p class="text-sm text-gray-500 dark:text-gray-400" data-i18n="footer">
+                © 2026 Centro Especializado Médico Avanzado. Todos los derechos reservados.
+            </p>
+        </div>
     </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/5610537216" target="_blank" rel="noopener noreferrer" 
+       class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+       title="Contáctanos por WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c-.003 1.396.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+        </svg>
+    </a>
 
     <!-- Scripts: GSAP y ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -479,6 +522,7 @@
                 vision_subtext: 'El futuro de la medicina',
                 tour_360_title: 'Recorrido <span class="font-bold text-cema-cyan">360°</span>',
                 footer_address: 'C. Guillermo Gonzalez Camarena 1100, Santa Fe, Sta Fé, Álvaro Obregón, 01210 Ciudad de México, CDMX',
+                footer_contact: 'Contacto: Andrea Miranda',
                 footer: '© 2026 Centro Especializado Médico Avanzado. Todos los derechos reservados.'
             },
             en: {
@@ -509,6 +553,7 @@
                 vision_subtext: 'The future of medicine',
                 tour_360_title: '<span class="font-bold text-cema-cyan">360°</span> Tour',
                 footer_address: 'C. Guillermo Gonzalez Camarena 1100, Santa Fe, Sta Fé, Álvaro Obregón, 01210 Mexico City, CDMX',
+                footer_contact: 'Contact: Andrea Miranda',
                 footer: '© 2026 Advanced Medical Specialized Center. All rights reserved.'
             }
         };
