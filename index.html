@@ -261,7 +261,7 @@
         class="relative w-full py-32 bg-cema-navy overflow-hidden flex items-center justify-center text-center">
         <!-- Fondo oscuro elegante -->
         <div class="absolute inset-0 w-full h-full bg-cover bg-center opacity-20 mix-blend-screen"
-            style="background-image: url('/cirugia.webp');">
+            style="background-image: url('/public/cirugia.webp');">
         </div>
         <div class="absolute inset-0 bg-gradient-to-t from-cema-navy via-transparent to-cema-navy"></div>
 
@@ -427,9 +427,10 @@
                     C. Guillermo Gonzalez Camarena 1100, Santa Fe, Sta Fé, Álvaro Obregón, 01210 Ciudad de México, CDMX
                 </p>
                 <div class="text-sm text-cema-gray dark:text-gray-400 flex flex-col items-center md:items-start gap-1">
-                    <span data-i18n="footer_contact">Contacto: Andrea Miranda</span>
-                    <a href="tel:+5610537216" class="hover:text-cema-cyan transition-colors font-semibold">+56 1053
-                        7216</a>
+                    <span class="font-bold text-cema-navy dark:text-white" data-i18n="footer_contact_name">Gabriel Ochoa</span>
+                    <span class="text-xs" data-i18n="footer_contact_title">Gerente Comercial CEMA</span>
+                    <a href="tel:+5610753001" class="hover:text-cema-cyan transition-colors font-semibold mt-1">56-1075-3001</a>
+                    <a href="mailto:gerente.comercial@cema.lat" class="hover:text-cema-cyan transition-colors text-xs">gerente.comercial@cema.lat</a>
                 </div>
                 <!-- Redes Sociales -->
                 <div class="flex items-center gap-4 mt-2">
@@ -458,7 +459,7 @@
     </footer>
 
     <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/5610537216" target="_blank" rel="noopener noreferrer"
+    <a href="https://wa.me/5610753001" target="_blank" rel="noopener noreferrer"
         class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 hover:shadow-xl transition-all duration-300 flex items-center justify-center"
         title="Contáctanos por WhatsApp">
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
@@ -523,7 +524,8 @@
                 vision_subtext: 'El futuro de la medicina',
                 tour_360_title: 'Recorrido <span class="font-bold text-cema-cyan">360°</span>',
                 footer_address: 'C. Guillermo Gonzalez Camarena 1100, Santa Fe, Sta Fé, Álvaro Obregón, 01210 Ciudad de México, CDMX',
-                footer_contact: 'Contacto: Andrea Miranda',
+                footer_contact_name: 'Gabriel Ochoa',
+                footer_contact_title: 'Gerente Comercial CEMA',
                 footer: '© 2026 Centro Especializado Médico Avanzado. Todos los derechos reservados.'
             },
             en: {
@@ -554,7 +556,8 @@
                 vision_subtext: 'The future of medicine',
                 tour_360_title: '<span class="font-bold text-cema-cyan">360°</span> Tour',
                 footer_address: 'C. Guillermo Gonzalez Camarena 1100, Santa Fe, Sta Fé, Álvaro Obregón, 01210 Mexico City, CDMX',
-                footer_contact: 'Contact: Andrea Miranda',
+                footer_contact_name: 'Gabriel Ochoa',
+                footer_contact_title: 'CEMA Commercial Manager',
                 footer: '© 2026 Advanced Medical Specialized Center. All rights reserved.'
             }
         };
@@ -821,7 +824,7 @@
         // ==========================================
         pannellum.viewer('panorama-container', {
             "type": "equirectangular",
-            "panorama": "/360_img.jpg",
+            "panorama": "/public/imagen_360.jpg",
             "autoLoad": true, // Muestra loader automáticamente mientras carga la de 2.3MB
             "showFullscreenCtrl": true,
             "mouseZoom": false,
